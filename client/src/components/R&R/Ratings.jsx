@@ -29,7 +29,6 @@ const Ratings = ({ reviewsMetaData, updateFilters, filters, clearFilters }) => {
     }
     if (ratings !== undefined){
 
-      console.log('Object.entries >>>', Object.entries(ratings))
     }
     return (sum / getTotal()).toFixed(1);
   };
@@ -71,6 +70,7 @@ const Ratings = ({ reviewsMetaData, updateFilters, filters, clearFilters }) => {
           ? <div>
               <br/>
               Current Filters: {filters.join('/')} star reviews
+              <br/>
               <button onClick={clearFilters}>Remove Current Filters</button>
           </div>
           : ''}
