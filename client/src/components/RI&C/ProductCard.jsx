@@ -172,8 +172,7 @@ const Button = styled.button`
   &:hover {
     color: white;
   }
-`
-
+`;
 
 const Image = styled.div`
   width: 100%;
@@ -188,6 +187,6 @@ const Click = styled.div`
   width: 100%;
   height: 170px;
   //border: solid;
-`
+`;
 
 export default RPEntry;

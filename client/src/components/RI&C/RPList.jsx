@@ -19,6 +19,7 @@ class RPList extends React.Component {
     this.moveToPrev = this.moveToPrev.bind(this);
     this.moveToNext = this.moveToNext.bind(this);
     this.showArrow = this.showArrow.bind(this);
+    this.removeDuplicateId = this.removeDuplicateId.bind(this);
   }
 
   componentDidMount() {
@@ -62,10 +63,12 @@ class RPList extends React.Component {
 
   moveToNext() {
     this.setState({leftCount: this.state.leftCount + 1}, this.showArrow)
+    this.myRef.current.scrollLeft += 200;
   }
 
   moveToPrev() {
     this.setState({leftCount: this.state.leftCount - 1}, this.showArrow)
+    this.myRef.current.scrollLeft += -200;
   }
 
 
@@ -88,22 +91,28 @@ class RPList extends React.Component {
     }
   }
 
-
-  render() {
-    let leftCount = this.state.leftCount
+  removeDuplicateId () {
     let relatedProductId = [];
     this.state.relatedProductId.forEach((id) => {
       if (!relatedProductId.includes(id)) {
         relatedProductId.push(id);
       }
     })
+    return relatedProductId;
+  }
+
+
+  render() {
+    let leftCount = this.state.leftCount
+    const relatedProductId = this.removeDuplicateId()
+
     return (
       <div id="RPList">
         <Title>RELATED PRODUCTS</Title>
         <ListContainer id="rplist">
         <ButtonContainer>{this.state.showLeft && <LeftArrow onClick={this.moveToPrev}>˱</LeftArrow>}</ButtonContainer>
           <CarouserContainerInner ref={this.myRef}>
-        {relatedProductId.slice(leftCount).map((id, i) => {
+        {relatedProductId.map((id, i) => {
           return <ProductCard relatedProductId={id} key={id} productInfo={this.state.currentProductInfo} rp={true} handleProductChange={this.props.handleProductChange}/>
         })}
         </CarouserContainerInner>
@@ -125,7 +134,6 @@ const ListContainer = styled.div`
   display: flex;
   align-items: center;
 `
-
 
 const CarouserContainerInner = styled.div`
   //overflow-x: scroll;

@@ -39,11 +39,13 @@ const OutfitList = (props) => {
   const moveToNext = () => {
     setLeftCount(leftCount => leftCount + 1)
     showArrow()
+    ref.current.scrollLeft += 200;
   }
 
   const moveToPrev = () => {
     setLeftCount(leftCount => leftCount - 1)
     showArrow()
+    ref.current.scrollLeft += -200;
   }
 
   const showArrow = () => {
@@ -65,7 +67,6 @@ const OutfitList = (props) => {
     }
   }
 
-  //render() {
     return(
       <div id="OutfitList">
         <Title>YOUR OUTFIT</Title>
@@ -73,7 +74,7 @@ const OutfitList = (props) => {
         <ButtonContainer>{showLeft && <LeftArrow onClick={moveToPrev}>˱</LeftArrow>}</ButtonContainer>
           <Card><PlusButton onClick={handlePlusButtonClick}>+</PlusButton></Card>
           <CarouserContainerInner ref={ref}>
-            {storageOutfits.slice(leftCount).map((id, i) => {
+            {storageOutfits.map((id, i) => {
               return <ProductCard relatedProductId={id} key={i} outfit={true} deleteOutfit={deleteOutfit}/>
             })}
         </CarouserContainerInner>
@@ -82,7 +83,6 @@ const OutfitList = (props) => {
       </div>
 
     )
-  //}
 }
 
 export default OutfitList;
@@ -118,7 +118,7 @@ const Card = styled.div`
   border-radius: 0.25rem;
   margin: 8px;
   border: 1px solid grey;
-`;
+`
 
 const ButtonContainer = styled.div`
   width: 40px;
