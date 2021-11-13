@@ -27,11 +27,11 @@ class App extends React.Component {
   render () {
     return (
     <div>
-        <Overview product_id={this.state.product_id} />
+        {/* <Overview product_id={this.state.product_id} /> */}
         <RPList productId={this.state.product_id} handleProductChange={this.handleProductChange}/>
         <OutfitList productId={this.state.product_id}/>
-        <QA productId={this.state.product_id}/>
-        <RROverview product_id={this.state.product_id}/>
+        {/* <QA productId={this.state.product_id}/>
+        <RROverview product_id={this.state.product_id}/> */}
     </div>)
   }
 }
