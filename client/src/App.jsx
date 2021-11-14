@@ -14,7 +14,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // 39333 to 40343 (39346) 40125 40212
       product_id: 40002
     }
     this.handleProductChange = this.handleProductChange.bind(this);
@@ -26,10 +25,10 @@ class App extends React.Component {
   render () {
     return (
     <div>
-       {/* <Overview /> */}
-        {/* <RPList productId={this.state.product_id} handleProductChange={this.handleProductChange}/>
-        <OutfitList productId={this.state.product_id}/> */}
-        {/* <QA /> */}
+       {/* <Overview />
+        <RPList productId={this.state.product_id} handleProductChange={this.handleProductChange}/> */}
+        {/* <OutfitList productId={this.state.product_id}/> */}
+        <QA productId={this.state.product_id}/>
         {/* <RROverview product_id={this.state.product_id}/> */}
     </div>)
   }

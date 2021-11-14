@@ -5,24 +5,15 @@ class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      term: '',
-      questions: props.questions,
-      searchedTerm: ''
+      term: ''
     }
-    console.log('QASEarch props', this.props)
     this.handleChange = this.handleChange.bind(this);
-    this.searchTerm = this.searchTerm.bind(this);
   }
   handleChange (e) {
     this.props.handleSearchBarInput(e.target.value)
     this.setState({
       term: e.target.value
     });
-  }
-
-  searchTerm(e) {
-    console.log('this is e')
-    this.props.handleSearchBarInput(this.state.term);
   }
 
   render() {
