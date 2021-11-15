@@ -131,8 +131,6 @@ app.put('/qa/answers/:answer_id/helpful', (req, res) => {
 })
 
 
-
-
 ///////////////////////////////Related Product and Comparison////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //request handler for get individual product information
@@ -141,7 +139,7 @@ app.get('/products/:product_id', (req, res) => {
   axios.get(
     `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}`,
     { headers: {
-      'Authorization': API_KEY, 'Cache': 'public, max-age=30000' }}
+      'Authorization': API_KEY }}
   )
     .then((results) => {
       res.set('Cache-control', 'public, max-age=30000')
@@ -202,29 +200,6 @@ app.get('/reviews/meta/:product_id', (req, res) => {
 })
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // ==================== Ratings & Reviews =========================
 
@@ -318,9 +293,9 @@ app.post(`/cart/:sku_id`, function (req, res) {
 
   console.log('Hi there, cart', product);
 
-  axios.post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`, 
-  { 
-    headers: { 
+  axios.post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`,
+  {
+    headers: {
       'Authorization': API_KEY,
       'Content-Type': 'application/json'
     },
@@ -336,7 +311,7 @@ app.post(`/cart/:sku_id`, function (req, res) {
 
 app.get(`/cart`, function (req, res) {
   // TODO - your code here!
-  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`, 
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`,
   { headers: { 'Authorization': API_KEY } })
     .then((results) => {
       res.send(results.data);
@@ -345,10 +320,7 @@ app.get(`/cart`, function (req, res) {
       res.send(err);
     })
 });
-
-
-
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.listen(PORT, () => {
   console.log(`Server listening at localhost:${PORT}!`);
