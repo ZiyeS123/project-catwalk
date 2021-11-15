@@ -36,7 +36,6 @@ class QuestionsAndAnswers extends React.Component {
     .then((questions) => {
       this.setState({questions: questions.data.results,
       displayedQuestions: questions.data.results.slice(0, 4)}, () => {
-        console.log('inside GetQAndA', this.state.displayedQuestions)
       });
     })
     .catch((err) => {

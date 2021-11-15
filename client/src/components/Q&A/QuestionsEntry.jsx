@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AnswersEntry from './Q&AnswersEntry.jsx';
+import axios from 'axios';
+import styled from 'styled-components';
 
 
 const QuestionsEntry = (props) => {
@@ -20,9 +22,6 @@ const QuestionsEntry = (props) => {
             </h4>
             <AnswersEntry
             answers={filteredQ.answers}/>
-            {/* {Object.keys(filteredQ.answers).length > 2 &&
-            <button onClick={handleClick(filteredQ.answers)}>More Answers</button>
-            } */}
             </div>
           )
         })
@@ -30,7 +29,7 @@ const QuestionsEntry = (props) => {
       </div>
     )
   }
-  return(
+  return (
     props.questions.map((question, key) => {
       return (
         <div key={question.question_id}>
@@ -40,13 +39,24 @@ const QuestionsEntry = (props) => {
         </h4>
         <AnswersEntry
         answers={question.answers}/>
-        {Object.keys(question.answers).length > 2 &&
-        <button>More Answers</button>
-        }
         </div>
       )
     })
   )
+
 }
+
+const AccordianSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  background: rgba(200, 200, 200, 0.5)
+  width: 75%
+  border: solid;
+  font-size: 15px;
+  outline: none;
+  overflow-y: scroll;
+  overflox-x: scroll;
+`;
 
 export default QuestionsEntry;

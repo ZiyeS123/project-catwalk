@@ -3,54 +3,87 @@ import axios from 'axios';
 import styled from 'styled-components';
 import dateFormatter from '../Shared/dateformatter.js'
 
+const initialAnswers = []
+
 const AnswersEntry = (props) => {
-  console.log(props);
+  const [answers, setAnswers] = useState({answers: []});
+  const [displayedAnswers, setDisplayedAnswers] = useState({displayedAnswers: []});
+  const [indexDisplayed, setIndexDisplayed] = useState({indexDisplayed: 0});
+  const [reportText, setReportText] = useState('Report');
 
-  const [displayedAnswers, setDisplayedAnswers] = useState([]);
-  const [indexDisplayed, setIndexDisplayed] = useState(0);
 
-  const handleClick = () => {
-    console.log('clicked');
-  }
-  useEffect(() => {
-    let newDisplayedAnswers = displayedAnswers;
-    let AnswersIndexDisplayed = indexDisplayed;
-    let answers = props.answers;
-    let newArrOfAnswers = [];
-    Object.keys(answers).forEach((answer) => {
-      newArrOfAnswers.push(answers[answer])
-    })
-    for (let i = indexDisplayed; i <= indexDisplayed + 1; i++) {
-      if (!newArrOfAnswers[i]) {
-        break;
-      }
-      newDisplayedAnswers.push(newArrOfAnswers[i]);
+  const makeAnswersState = () => {
+    const apiAnswers = props.answers;
+    for (var key in apiAnswers) {
+      answers.answers.push(apiAnswers[key])
     }
-    setIndexDisplayed(AnswersIndexDisplayed + 2);
-    setDisplayedAnswers(newDisplayedAnswers);
-  }, [displayedAnswers])
-  console.log('displayed answers', displayedAnswers);
-  if (!displayedAnswers.length) {
+  }
+
+  const showNextAnswers = () => {
+    let displayed = displayedAnswers.displayedAnswers;
+    let index = indexDisplayed.indexDisplayed;
+    let apianswers = answers.answers;
+    for (let i = index; i <= index + 1; i++) {
+      if (displayed.length < apianswers.length) {
+        displayed.push(apianswers[i]);
+      }
+    }
+    setDisplayedAnswers({displayedAnswers: displayed});
+    setIndexDisplayed({indexDisplayed: index + 2});
+  }
+
+  const handleAnswerHelpfulnessClick = (answer_id) => {
+    axios.put(`/qa/answers/${answer_id}/helpful`)
+    .then((response) => {
+      console.log(answers.answers);
+      const updatedAnswers = answers.answers.map((answer => {
+        if (answer.id === answer_id) {
+          answer.helpfulness += 1
+        }
+        return answer
+      }))
+      setAnswers({answers: updatedAnswers})
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  // const changeReportText = (answer_id) => {
+  //   axios.put(`/qa/answers/${answer_id}/report`)
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err)
+  //   })
+  // }
+
+  useEffect(() => {
+    makeAnswersState();
+    showNextAnswers();
+  }, [])
+
+  if (!displayedAnswers.displayedAnswers.length) {
     return ( null )
   }
   return(
     <div>
-    {displayedAnswers.map((answer) => {
-      {console.log('this is the answer', answer)}
+    {displayedAnswers.displayedAnswers.map((answer) => {
       return (
         <div key={answer.id}>
         <p>A: {answer.body}</p>
         <p>By: {answer.answerer_name}
         Date: {dateFormatter(answer.date)} |
-        Helpful? <button>Yes</button>
+        Helpful? {answer.helpfulness}<button onClick={handleAnswerHelpfulnessClick(answer.id)}>Yes</button>
         Report</p>
         </div>
       )
     })}
+    {Object.keys(props.answers).length > 2 &&
+    <button onClick={() => {showNextAnswers()}}>More Answers</button>}
     </div>
   )
-
-
 }
 
 // class AnswersEntry extends React.Component {

@@ -13,10 +13,10 @@ module.exports = {
       }
     })
   },
-  getAnswers: function(question_id) {
+  getAnswers: function(question_id, count) {
     return axios({
       method: 'GET',
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/qa/questions/${question_id}/answers`,
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/qa/questions/${question_id}/answers?count=${count}`,
       headers: {
         'User-Agent': 'request',
         'Authorization':`${config.API_KEY}`
