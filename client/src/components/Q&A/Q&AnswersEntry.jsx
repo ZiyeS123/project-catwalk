@@ -10,7 +10,8 @@ const AnswersEntry = (props) => {
   const [displayedAnswers, setDisplayedAnswers] = useState({displayedAnswers: []});
   const [indexDisplayed, setIndexDisplayed] = useState({indexDisplayed: 0});
   const [reportText, setReportText] = useState('Report');
-
+  const [disableHelpfulness, setDisableHelpfulness] = useState([]);
+  const [isReported, setIsReported] = useState([]);
 
   const makeAnswersState = () => {
     const apiAnswers = props.answers;
@@ -35,7 +36,6 @@ const AnswersEntry = (props) => {
   const handleAnswerHelpfulnessClick = (answer_id) => {
     axios.put(`/qa/answers/${answer_id}/helpful`)
     .then((response) => {
-      console.log(answers.answers);
       const updatedAnswers = answers.answers.map((answer => {
         if (answer.id === answer_id) {
           answer.helpfulness += 1
@@ -49,15 +49,23 @@ const AnswersEntry = (props) => {
     })
   }
 
-  // const changeReportText = (answer_id) => {
-  //   axios.put(`/qa/answers/${answer_id}/report`)
-  //   .then((res) => {
-  //     console.log(res);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   })
-  // }
+  const toggleHelpfulness = (answerId) => {
+    setDisableHelpfulness([...disableHelpfulness, answerId]);
+  }
+
+  const changeReportText = (answerId) => {
+    setIsReported([...isReported, answerId])
+  }
+
+  const updateReport = (answer_id) => {
+    axios.put(`/qa/answers/${answer_id}/report`)
+    .then(() => {
+      changeReportText(answer_id);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
   useEffect(() => {
     makeAnswersState();
@@ -69,14 +77,18 @@ const AnswersEntry = (props) => {
   }
   return(
     <div>
-    {displayedAnswers.displayedAnswers.map((answer) => {
+    {displayedAnswers.displayedAnswers.map((answer, key) => {
       return (
         <div key={answer.id}>
         <p>A: {answer.body}</p>
         <p>By: {answer.answerer_name}
         Date: {dateFormatter(answer.date)} |
-        Helpful? {answer.helpfulness}<button onClick={handleAnswerHelpfulnessClick(answer.id)}>Yes</button>
-        Report</p>
+        Helpful? {answer.helpfulness}
+        <button
+        onClick={() => {handleAnswerHelpfulnessClick(answer.id);
+        toggleHelpfulness(answer.id)}}
+        disabled={disableHelpfulness.includes(answer.id)}>Yes</button>
+        <button onClick={() => {updateReport(answer.id)}}>{reportText}</button></p>
         </div>
       )
     })}

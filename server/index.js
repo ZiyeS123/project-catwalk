@@ -105,7 +105,7 @@ app.put('/qa/questions/:question_id/report', (req, res) => {
 app.put('/qa/answers/:answer_id/report', (req, res) => {
   const { answer_id } = req.params;
   QAhelpers.reportAnswer(answer_id)
-  .then((response) => {
+  .then(() => {
     res.sendStatus(204);
   })
   .then((err) => {
@@ -115,11 +115,11 @@ app.put('/qa/answers/:answer_id/report', (req, res) => {
 
 // ------ add to answer helpfulness count ----
 
-app.put('/qa/answers/:answer_id/helpful', (req, res, next) => {
+app.put('/qa/answers/:answer_id/helpful', (req, res) => {
   const { answer_id } = req.params;
   QAhelpers.addToAnswerHelpfulness(answer_id)
-  .then((res) => {
-    res.status(204).send('OK');
+  .then(() => {
+    res.status(204).send(res.data)
   })
   .catch((err) => {
     console.log(err)
