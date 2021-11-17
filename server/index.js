@@ -78,7 +78,7 @@ app.post('/qa/answers', (req, res) =>
 app.put('/qa/questions/:product_id/helpful', (req, res) => {
   const { product_id } = req.params;
   QAhelpers.addToHelpfulness(product_id)
-  .then((response) => {
+  .then(() => {
     res.sendStatus(204)
   })
   .catch((error) => {
@@ -91,7 +91,7 @@ app.put('/qa/questions/:product_id/helpful', (req, res) => {
 app.put('/qa/questions/:question_id/report', (req, res) => {
   const { question_id } = req.params;
   QAhelpers.reportQuestion(question_id)
-  .then((response) => {
+  .then(() => {
     res.sendStatus(204)
   })
   .catch((err) => {
@@ -106,7 +106,7 @@ app.put('/qa/answers/:answer_id/report', (req, res) => {
   const { answer_id } = req.params;
   QAhelpers.reportAnswer(answer_id)
   .then(() => {
-    res.sendStatus(204);
+    res.status(204);
   })
   .then((err) => {
     console.log(err)
@@ -118,8 +118,8 @@ app.put('/qa/answers/:answer_id/report', (req, res) => {
 app.put('/qa/answers/:answer_id/helpful', (req, res) => {
   const { answer_id } = req.params;
   QAhelpers.addToAnswerHelpfulness(answer_id)
-  .then(() => {
-    res.status(204).send(res.data)
+  .then(({data}) => {
+    res.status(204).send(data)
   })
   .catch((err) => {
     console.log(err)
