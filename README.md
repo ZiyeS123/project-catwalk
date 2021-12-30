@@ -59,8 +59,10 @@ My goal was to design the UI and complete all functionalities for related produc
 
 ## Product Demo
 
-
 https://user-images.githubusercontent.com/88356949/147788360-a7710a37-4a7f-402f-8520-dd09fa4fe637.mov
+
+## Lighthouse Report
+<img src="https://user-images.githubusercontent.com/88356949/141605638-132940e7-c7e0-4ea9-a392-c54b482e54ff.png">
 
 
 ## Installation
