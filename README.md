@@ -26,6 +26,7 @@ Project catwalk is Front End Capstone project for HackReactor. This project comp
 ### Code Formatter
 <img width="15%" src="https://www.vectorlogo.zone/logos/eslint/eslint-ar21.svg"> <img width="15%" src="https://raw.githubusercontent.com/prettier/prettier-logo/master/images/prettier-banner-light.png">
 
+
 ### Testing
  <img width="15%" src="https://www.vectorlogo.zone/logos/jestjsio/jestjsio-ar21.svg">
 
